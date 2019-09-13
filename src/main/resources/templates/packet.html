@@ -1,0 +1,60 @@
+<div th:each="packet : ${packets}" xmlns:th="http://www.w3.org/1999/xhtml">
+    <tr>
+        <td class=empty></td>
+        <td class=empty></td>
+        <td class=empty></td>
+        <td class=empty></td>
+            <td class="relative empty"  th:classappend="${packet.direction} ? textAngleRightTop : textAngleLeftTop"
+                style="text-align:center;"
+                th:text="${packet.messageTopRelative}">SYN 1576501183:1576501183 (0)
+            </td>
+            <td class="absolute empty hidden-on-load" th:classappend="${packet.direction} ? textAngleRightTop : textAngleLeftTop"
+                style="text-align:center;"
+                th:text="${packet.messageTopAbsolute}">SYN 1576501183:1576501183 (0)
+            </td>
+        <td class=empty></td>
+    </tr>
+    <tr>
+        <td class="relative packetNumber" th:text="${packet.relativePacketNumber}">122</td>
+        <td class="absolute packetNumber hidden-on-load" th:text="${packet.absolutePacketNumber}">1229292929</td>
+        <td class="relative time" th:text="${packet.relativeTime}">Timestamp</td>
+        <td class="absolute time hidden-on-load" th:text="${packet.absoluteTime}">Timestamp</td>
+        <td class="delta" th:text="${packet.relativePacketNumber} > 1 ? '('+${packet.deltaTime}+')' : ''">(delta)</td>
+        <td class="rightBorder"></td>
+        <td>
+            <div th:if="${packet.PSH}">
+                <div th:replace="${ packet.direction} ? arrowRightPSH : arrowLeftPSH" ></div>
+            </div>
+            <div th:if="${!packet.PSH}">
+                <div th:replace="${packet.direction} ? arrowRight : arrowLeft" ></div>
+            </div>
+        </td>
+        <td class="leftBorder"></td>
+        <td class="analysis">
+            <a th:href="'/' + ${packet.analysisCSS}" class="noLink">
+                <div class="container" role="button" data-toggle="popover" data-trigger="focus">
+            <span class="" th:classappend="${packet.analysisCSS}" th:text="${packet.analysisMessage}">message</span>
+                </div>
+            </a>
+            <a th:href="'/' + ${packet.analysisCSS2}" class="noLink">
+                <div class="container" role="button" data-toggle="popover" data-trigger="focus">
+            <span class="" th:classappend="${packet.analysisCSS2}" th:text="${packet.analysisMessage2}">message</span>
+                </div>
+            </a>
+        </td>
+    </tr>
+    <tr>
+    <td class=empty></td>
+    <td class=empty></td>
+    <td class=empty></td>
+    <td class=empty></td>
+        <td class="relative empty" th:classappend="${packet.direction} ? textAngleRightBottom : textAngleLeftBottom"
+            style="text-align:center;"
+            th:text="${packet.SYN} ? ${packet.synMessageRelative} : ${packet.notSynMessageRelative}"></td>
+
+        <td class="absolute empty hidden-on-load" th:classappend="${packet.direction} ? textAngleRightBottom : textAngleLeftBottom"
+            style="text-align:center;"
+            th:text="${packet.SYN} ? ${packet.synMessageAbsolute} : ${packet.notSynMessageAbsolute}"></td>
+    <td class=empty></td>
+    </tr>
+</div>

@@ -1,0 +1,96 @@
+<nav class="navbar navbar-default navbar-fixed-top" xmlns:paddingtop="http://www.w3.org/1999/xhtml"
+     xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><img src="/assets/tcpviz-logo1.png" width="75px" height="34px" paddingtop:"9px"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
+            <ul class="nav navbar-nav submitInfo">
+                <li>
+                    <div class="single-upload">
+                        <form id="singleUploadForm" name="singleUploadForm" action="/uploadFile">
+                            <input id="singleFileUploadInput" type="file" name="file" class="file-input" required />
+                            <button type="submit" class="primary submit-btn">Submit</button>
+                        </form>
+                    </div>
+                </li>
+                <li>
+                    <div class="upload-response">
+                        <div id="singleFileUploadError"></div>
+                        <div id="singleFileUploadSuccess"></div>
+                    </div>
+                </li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li><button id="numberSystemA" class="relative btn-default submit-btn" style="margin-top: 5px; margin-right: 10px;">Relative</button></li>
+                <li><button id="numberSystemR" class="absolute btn-default submit-btn" style="margin-top: 5px; margin-right: 10px;">Absolute</button></li>
+
+                <li class="chartToggleInfo"><button class="btn-default submit-btn" onclick="chartToggle()" style="margin-top: 5px; margin-right: 10px;">Charts</button></li>
+
+                <li th:if="${numberOfStreams} != null" class="navigateInfo"><a href="/readUploaded">All streams</a></li>
+                <li th:if="${numberOfStreams} != null" class="navigateInfo"><a th:href="'/' + (((${streamId} - 1 + ${numberOfStreams} - 1) % ${numberOfStreams} + 1) )"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                <li th:if="${numberOfStreams} != null" class="navigateInfo"><div id="streamCount" th:text="${streamId} + '/' + ${numberOfStreams}"></div></li>
+                <li th:if="${numberOfStreams} != null" class="navigateInfo"><a th:href="'/' + ((${streamId} % ${numberOfStreams}) + 1)"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+
+                <li class="dropdown exampleInfo">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Examples <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/syn1">Open and Close TCP connection</a></li>
+                        <li><a href="/rst">Reset connection</a></li>
+                        <li><a href="/ackUnseenSegment">ACKed Unseen Segment</a></li>
+                        <li><a href="/previousSegmentNotCaptured">Previous Segment Not Captured</a></li>
+                        <li><a href="/dupAck">Duplicate ACKs</a></li>
+                        <li><a href="/keepAlive">Keep-Alive</a></li>
+                        <li><a href="/keepAliveAck">Keep-Alive ACK</a></li>
+                        <li><a href="/fastRetransmission">Fast Retransmission</a></li>
+                        <li><a href="/outOfOrder">Out Of Order</a></li>
+                        <li><a href="/reusedPorts">Reused Ports</a></li>
+                        <li><a href="/spuriousRetransmission">Spurious Retransmission</a></li>
+                        <li><a href="/retransmission">Retransmission</a></li>
+                        <li><a href="/windowUpdate">Window Update</a></li>
+                        <li><a href="/windowFull">Window Full</a></li>
+                        <li><a href="/zeroWindow">Zero Window</a></li>
+                        <li><a href="/zeroWindowProbe">Zero Window Probe</a></li>
+                        <li><a href="/zeroWindowProbeAck">Zero Window Probe ACK</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/good">Good TCP behaviour</a></li>
+                        <li><a href="/ecn">Explicit Congestion Notification</a></li>
+                        <li><a href="/slowStart">Slow Start</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li class="menu-item dropdown dropdown-submenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">More Examples</a>
+                            <ul class="dropdown-menu">
+                                <li class="menu-item ">
+                                    <li><a href="/ManyDupacks">Many Dupacks</a></li>
+                                    <li><a href="/FINandRST">FIN and RST flags</a></li>
+                                    <li><a href="/SegmentsAfterRST">Segment After a RST flag</a></li>
+                                    <li><a href="/FRisOOO">What is Segment 24?</a></li>
+                                    <li><a href="/TLSencryptedAlert1">TLS Encrypted Alert 1: segment 10</a></li>
+                                    <li><a href="/TLSencryptedAlert2">TLS Encrypted Alert 2: segment 23</a></li>
+                                    <li><a href="/httpMessage">HTTP GET Requests</a></li>
+                                    <li><a href="/URGACKPSHflood">URG ACK PSH flood</a></li>
+                                    <li><a href="/LargerExample">Larger Example</a></li>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+
+            </ul>
+
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>

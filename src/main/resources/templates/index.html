@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="head"></div>
+<body>
+<div th:replace="nav"></div>
+<div class="container-fluid">
+    <div class="row">
+<!-- ================================= Main Content ================================================================ -->
+        <div class="col-md-12">
+            <script>
+                function chartToggle() {
+                  var x = document.getElementById("chartToggle");
+                  if (x.style.display === "none" ) {
+                    x.style.display = "block";
+                  } else {
+                    x.style.display = "none";
+                  }
+                }
+            </script>
+            <div id="chartToggle" class="chartArea">
+                <div th:replace="charts"></div>
+            </div>
+            <div id="fileNameIndex" th:text="${fileName} + ' Stream: ' + ${streamId}" > FileName </div>
+            <div th:replace="svg"></div>
+            <div class="keepScale">
+            <div th:replace="table-header-info"></div>
+<!-- ================================= The Packets ================================================================= -->
+            <div th:replace="packet"></div>
+<!-- ================================= End of packets ============================================================== -->
+            </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div> <!-- End Fluid Container -->
+<!-- /CONTENT -->
+<div th:replace="scripts"></div>
+</body>
+</html>

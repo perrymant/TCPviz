@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="head"></div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<body>
+<div th:replace="nav"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-1"></div>
+<div class="col-md-11">
+    <img src="/assets/tcpviz-logo1.png" style="display: block; margin-left: 380px; width: 140px;">
+<!-- ================================= Main Content ================================================================ -->
+    <span style="display: block; width: 950px; text-align: justify; padding-top: 10px;">
+    Welcome to TCPViz, an online TCP analysis and visualisation tool. You can upload PCAP files or have a look at <a href="/example">example</a> streams as well.
+    </span>
+    <span style="display: block; width: 950px; text-align: justify; padding-bottom: 10px;">
+    The internet works by sending packets between devices, and a PCAP file might have conversations between many different machines.
+    The diagram below shows the streams (think of them as conversations) between a few devices. The height of the link indicates the number of packets in the stream:
+    </span>
+        <div id="homeSankey" style="display: inline-block;" >
+            <script th:inline="javascript">
+            /*<![CDATA[*/
+
+            var dataTable = /*[[${dataTable}]]*/ 'default';
+            console.log(dataTable);
+
+            /*]]>*/
+            </script>
+
+            <div id="sankey_basic" style="height:350px; width:950px; padding-left: 0px;"> </div>
+
+            <script type="text/javascript" th:inline="javascript">
+                /*<![CDATA[*/
+                google.charts.load('current', {'packages':['sankey']});
+
+                google.charts.setOnLoadCallback(drawChart);
+
+                function drawChart() {
+
+                    var d = /*[[${dataTable}]]*/  ;
+                    var data = google.visualization.arrayToDataTable(d);
+
+                  var view = new google.visualization.DataView(data);
+                  view.setColumns([0, 1, 2, 3]);
+
+                  var options = {
+                    sankey: {
+                      tooltip: {isHtml: false},
+                      link: {  interactivity: true  },
+                      node: {
+                        label: {
+                          fontSize: 12
+                        }
+                      }
+                    }
+                  };
+
+                  var chart = new google.visualization.Sankey(
+                    document.getElementById('sankey_basic'));
+
+                  chart.draw(data, options);
+
+                  var selectHandler = function(e) {
+                    window.location = data.getValue(chart.getSelection()[0]['row'], 4 );
+                  }
+
+                  google.visualization.events.addListener(chart, 'select', selectHandler);
+                }
+                /*]]>*/
+            </script>
+        </div>
+    <span style="display: block; width: 950px; text-align: justify; padding-top: 10px; padding-bottom: 10px;">
+    You can click on a link to view the stream between devices. When you do, you will see a line diagram that visualises how the packets flow between the devices.
+    There are many different protocols that can be used when sending packets between machines, and this visualiser is principally concerned with the Transfer Control Protocol (TCP).
+    It's one of the most widely used protocols for sending data between devices because it is connection-oriented (which means that a connection between two devices must be made) and reliable (making sure the packets arrive at the intended destination).
+    It manages to fulfil these requirements by chunking data into the right size (what we call segments); through the use of various timers; through the use of acknowledgement segments; and providing a flow control to deal with machine memory.
+
+    </span>
+    <span style="display: block; width: 950px; text-align: justify; padding-top: 10px; padding-bottom: 10px;">
+    To the left of the time-line diagrams, you can see the packet number, time sent, the delta time between each packet in the stream.
+    Then on the arrows you can see the direction of the data flow, the sequence number, the acknowledgement number and the window size.
+    Finally, on the right-hand side you can see the analysis message that can indicate good or bad TCP behaviour. This information is not included in the segments themselves, but has been inferred from the stream of segments.
+    You can find out more about each TCP analysis type by clicking on the analysis messages, or through viewing the examples from the navigation bar.
+    </span>
+            <div id="homeLine" style="overflow: auto;">
+                <div th:replace="svg"></div>
+                <div th:replace="table-header-info"></div>
+        <!-- ================================= The Packets ================================================================= -->
+                <div th:replace="packet"></div>
+        <!-- ================================= End of packets ============================================================== -->
+                </table>
+            </div>
+    <span style="display: block; width: 950px; text-align: justify; padding-top: 10px; padding-bottom: 10px;">
+    </span>
+    <span style="display: block; width: 950px; text-align: justify; padding-top: 10px; padding-bottom: 10px;">
+    </span>
+    </div>
+</div>
+</div>
+<!-- /CONTENT -->
+<div th:replace="scripts"></div>
+</body>
+</html>

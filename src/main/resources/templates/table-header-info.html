@@ -1,0 +1,17 @@
+<!-- ====================== Table Header, Client and Server info =================================================== -->
+<div xmlns:th="http://www.w3.org/1999/xhtml">
+    <table style="table-layout: fixed;"  border="0">
+        <tr>
+            <th width="20px"> </th>
+            <th width="110px"> </th>
+            <th> </th>
+            <th style="max-width: 10px; text-align:center;">
+                <div id="context" th:text="${sender}"> Client </div>
+                <div></div>
+            </th>
+            <th> </th>
+            <th style="max-width: 10px; text-align:center;">
+                <div id="context" th:text="${receiver}"> Server </div>
+                <div></div>
+            </th>
+        </tr>

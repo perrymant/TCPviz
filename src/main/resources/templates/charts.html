@@ -1,0 +1,85 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<span th:if="${isTCP}" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<div class="panel panel-info sidePanelTop">
+    <div class="panel-heading" th:text="${sender}">Sender info</div>
+    <div class="panel-body">
+        <div id="chartSender_div"
+             style="
+            width: 550px;
+            height: 375px;
+            padding-top: 2px;
+            padding-left: 2px;
+            ">
+        </div>
+        <script type="text/javascript" th:inline="javascript">
+            /*<![CDATA[*/
+            google.charts.load('current', {'packages':['corechart', 'line']});
+            google.charts.setOnLoadCallback(drawSender);
+
+            function drawSender() {
+
+            var dSender = /*[[${dataTableSender}]]*/;
+            var dataSender = google.visualization.arrayToDataTable(dSender);
+
+            var view = new google.visualization.DataView(dataSender);
+            <!--view.setColumns([0, 1]);-->
+
+            var options = {
+              hAxis: {title: 'Send Time (seconds)', minValue: 0.0},
+              vAxis: {title: 'Sequence Number (KB)', minValue: 0.0},
+              lineWidth: 1.0,
+              pointSize: 4.0,
+              legend: 'none'
+            };
+
+            var chartSender = new google.visualization.LineChart(document.getElementById('chartSender_div'));
+
+            chartSender.draw(dataSender, options);
+            }
+            /*]]>*/
+        </script>
+    </div>
+</div>
+
+<div class="panel panel-info sidePanelBottom">
+    <div class="panel-heading" th:text="${receiver}">Receiver Info</div>
+    <div class="panel-body">
+        <div id="chartReceiver_div"
+             style="
+            width: 550px;
+            height: 375px;
+            padding-top: 2px;
+            padding-left: 2px;
+            ">
+        </div>
+        <script type="text/javascript" th:inline="javascript">
+            /*<![CDATA[*/
+            google.charts.load('current', {'packages':['corechart', 'line']});
+            google.charts.setOnLoadCallback(drawReceiver);
+
+            function drawReceiver() {
+
+            var dReceiver = /*[[${dataTableReceiver}]]*/;
+            var dataReceiver = google.visualization.arrayToDataTable(dReceiver);
+
+            var view = new google.visualization.DataView(dataReceiver);
+            <!--view.setColumns([0, 1]);-->
+
+            var options = {
+              hAxis: {title: 'Send Time (seconds)', minValue: 0.0},
+              vAxis: {title: 'Sequence Number (KB)', minValue: 0.0},
+              lineWidth: 1.0,
+              pointSize: 4.0,
+              legend: 'none'
+            };
+
+            var chartReceiver = new google.visualization.LineChart(document.getElementById('chartReceiver_div'));
+
+            chartReceiver.draw(dataReceiver, options);
+            }
+            /*]]>*/
+        </script>
+    </div>
+</div>
+</span>

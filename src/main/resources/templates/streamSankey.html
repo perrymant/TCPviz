@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<div th:replace="head"></div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+<body>
+<div th:replace="nav"></div>
+<div class="container-fluid">
+<div class="row">
+<!-- ================================= Main Content ================================================================ -->
+<div class="col-md-12">
+<div id="fileNameStreams" th:text="${fileName}"> FileName </div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+var dataTable = /*[[${dataTable}]]*/ 'default';
+console.log(dataTable);
+/*]]>*/
+</script>
+
+<div id="sankey_basic" th:style="'height:' + ${sankeyHeight} +'px;'"> </div>
+
+<script type="text/javascript" th:inline="javascript">
+/*<![CDATA[*/
+    google.charts.load('current', {'packages':['sankey']});
+
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+        var d = /*[[${dataTable}]]*/  ;
+        var data = google.visualization.arrayToDataTable(d);
+
+      var view = new google.visualization.DataView(data);
+      view.setColumns([0, 1, 2, 3]);
+
+      var options = {
+        sankey: {
+              link: {
+                      interactivity: true
+              },
+          node: {
+            label: {
+              fontSize: 12
+            }
+          }
+        }
+      };
+
+      var chart = new google.visualization.Sankey(
+        document.getElementById('sankey_basic'));
+
+      chart.draw(data, options);
+
+      var selectHandler = function(e) {
+        window.location = data.getValue(chart.getSelection()[0]['row'], 4 );
+      }
+
+      google.visualization.events.addListener(chart, 'select', selectHandler);
+    }
+/*]]>*/
+</script>
+</div>
+</div> <!-- End Main Content -->
+</div>
+</div> <!-- End Fluid Container -->
+<div th:replace="scripts"></div>
+</body>
+</html>
+
