@@ -8,3 +8,9 @@ The goal of this project is to create `Steven's Time Line Diagrams`, like this o
 
 from `pcap` files.
 
+You can visit TCPviz online at https://tcpviz.herokuapp.com
+
+Notes:
+- wait for heroku to load.
+- zoom out if you're using a small screen.
+- Try to keep uploaded files under 2MB
